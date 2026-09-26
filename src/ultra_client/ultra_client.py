@@ -4,19 +4,19 @@ Consume los endpoints internos para obtener cursos, carpetas, archivos, anuncios
 """
 from __future__ import annotations
 
-import re
 import html
 import json
 import mimetypes
+import re
 import urllib.parse
 from pathlib import Path
+
 import html2text
-from typing import Any
 import httpx
 from bs4 import BeautifulSoup
 
-from src.config.config import BASE_URL, DOWNLOADS_CACHE_FILE, SUPPORTED_EXTENSIONS
 from src.auth.auth import get_stored_cookies
+from src.config.config import BASE_URL, DOWNLOADS_CACHE_FILE, SUPPORTED_EXTENSIONS
 
 
 def get_filename_from_cd(cd_header: str) -> str | None:
@@ -413,8 +413,7 @@ class UltraClient:
             with self.client.stream("GET", download_url) as resp:
                 if resp.status_code == 200:
                     with open(dest_path, "wb") as f:
-                        for chunk in resp.iter_bytes(chunk_size=8192):
-                            f.write(chunk)
+                        f.writelines(resp.iter_bytes(chunk_size=8192))
                     canon_url = html.unescape(download_url).split("?")[0].rstrip("/")
                     self.downloads_cache[canon_url] = dest_path.name
                     self._save_cache()
@@ -498,8 +497,7 @@ class UltraClient:
                     return real_name
 
                 with open(final_path, "wb") as f:
-                    for chunk in resp.iter_bytes(chunk_size=8192):
-                        f.write(chunk)
+                    f.writelines(resp.iter_bytes(chunk_size=8192))
 
                 self.downloads_cache[canon_url] = real_name
                 self._save_cache()

@@ -1,5 +1,11 @@
 from pathlib import Path
-from src.organizer.organizer import parse_unit_number, parse_week_number, generate_gemini_notebook
+
+from src.organizer.organizer import (
+    generate_gemini_notebook,
+    parse_unit_number,
+    parse_week_number,
+)
+
 
 def test_regex():
     assert parse_unit_number("Unidad 1") == 1
@@ -21,7 +27,6 @@ def test_regex():
 
 def test_unified_copy():
     import tempfile
-    import shutil
     
     with tempfile.TemporaryDirectory() as tmpdir:
         base = Path(tmpdir)
@@ -87,7 +92,7 @@ def test_manifest_copy():
             {"local_path": f2, "original_name": "diapo.pdf", "unit": 1, "week": 1, "is_info_general": False},
         ]
         
-        import src.organizer.organizer as organizer
+        from src.organizer import organizer
         old_output_dir = organizer.OUTPUT_DIR
         organizer.OUTPUT_DIR = base
         try:

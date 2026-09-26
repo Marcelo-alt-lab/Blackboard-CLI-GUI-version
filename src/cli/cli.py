@@ -4,8 +4,8 @@ Diseñado con una interfaz moderna inspirada en CLI de agentes de IA (Claude Cod
 """
 from __future__ import annotations
 
-import sys
 import subprocess
+import sys
 from pathlib import Path
 
 # Asegurar codificación UTF-8 en consola de Windows
@@ -20,16 +20,16 @@ if sys.platform == "win32":
 def auto_setup():
     """Instala automáticamente dependencias y navegador si faltan."""
     try:
-        import rich
+        import bs4
+        import dateutil
+        import html2text
         import httpx
         import playwright
-        import bs4
-        import html2text
         import pypdf
-        import dateutil
+        import rich
     except ImportError:
         print("[!] Instalando librerias requeridas de Blackboard CLI...")
-        req_file = Path(__file__).parent / "requirements.txt"
+        req_file = Path(__file__).resolve().parent.parent.parent / "requirements.txt"
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", str(req_file)])
 
     try:
@@ -44,27 +44,31 @@ def auto_setup():
 
 auto_setup()
 
-from rich.console import Console
-from rich.table import Table
-from rich.panel import Panel
-from rich.text import Text
-from rich.prompt import Prompt, Confirm
 from rich import box
+from rich.console import Console
+from rich.panel import Panel
 from rich.progress import (
+    BarColumn,
     Progress,
     SpinnerColumn,
-    TextColumn,
-    BarColumn,
     TaskProgressColumn,
-    TimeElapsedColumn
+    TextColumn,
+    TimeElapsedColumn,
 )
+from rich.prompt import Confirm, Prompt
+from rich.table import Table
+from rich.text import Text
 
 console = Console(force_terminal=True, color_system="truecolor")
 
+from src.auth.auth import interactive_login, logout, verify_session
 from src.config.config import BASE_URL, OUTPUT_DIR, VERSION
-from src.auth.auth import verify_session, interactive_login, logout
+from src.organizer.organizer import (
+    CourseNotebookOrganizer,
+    format_date,
+    generate_gemini_notebook,
+)
 from src.ultra_client.ultra_client import UltraClient
-from src.organizer.organizer import CourseNotebookOrganizer, format_date, generate_gemini_notebook
 
 TEXT_FULL = r"""[bold bright_cyan]
  ██████╗ ██╗      █████╗  ██████╗██╗  ██╗██████╗  ██████╗  █████╗ ██████╗ ██████╗
@@ -619,7 +623,7 @@ def interactive_menu():
             menu_table,
             title="[bold white] Comandos [/bold white]",
             title_align="left",
-            subtitle=f"[dim grey42] Escribe un número o el nombre del comando [/dim grey42]",
+            subtitle="[dim grey42] Escribe un número o el nombre del comando [/dim grey42]",
             subtitle_align="left",
             border_style="grey37",
             box=box.ROUNDED,

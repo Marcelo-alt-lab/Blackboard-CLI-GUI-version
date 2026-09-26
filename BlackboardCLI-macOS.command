@@ -102,5 +102,5 @@ echo "[✓] Entorno virtual listo. Iniciando Blackboard CLI..."
 echo ""
 
 # 6. Iniciar la aplicación
-export PYTHONPATH="$DIR"
+    export PYTHONPATH="$DIR"
     exec "$VENV_PY" "$DIR/src/cli/cli.py" "$@"
