@@ -5,11 +5,11 @@ y extrae las cookies de sesión para consultas API rápidas.
 """
 from __future__ import annotations
 
-import sys
 import json
+import sys
 import time
+
 import httpx
-from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 if sys.platform == "win32":
@@ -19,7 +19,7 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-from config import BASE_URL, SESSION_DIR, COOKIES_FILE
+from src.config.config import BASE_URL, COOKIES_FILE, SESSION_DIR
 
 
 def get_stored_cookies() -> dict[str, str] | None:

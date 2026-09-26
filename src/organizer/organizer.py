@@ -5,26 +5,26 @@ en carpetas limpias y genera archivos Markdown optimizados para el estudiante y 
 """
 from __future__ import annotations
 
-import re
 import html
-import json
+import re
 import shutil
 import urllib.parse
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+
 from dateutil import parser as date_parser
 
-from config import (
-    OUTPUT_DIR,
-    DIR_INFO_GENERAL,
-    DIR_EVALUACIONES,
-    DIR_MATERIALES,
+from src.config.config import (
     DIR_ANUNCIOS,
+    DIR_EVALUACIONES,
     DIR_GEMINI_NOTEBOOK,
+    DIR_INFO_GENERAL,
+    DIR_MATERIALES,
     KEYWORDS_INFO_GENERAL,
+    OUTPUT_DIR,
     SUPPORTED_EXTENSIONS,
 )
-from ultra_client import UltraClient
+from src.ultra_client.ultra_client import UltraClient
 
 
 def parse_unit_number(text: str) -> int | None:

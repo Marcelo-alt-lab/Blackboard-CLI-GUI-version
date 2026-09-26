@@ -12,18 +12,14 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-from config import VERSION
+from src.config.config import VERSION
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 ZIP_NAME = BASE_DIR / f"Blackboard-CLI-v{VERSION}.zip"
 
 # Archivos base del proyecto
 FILES_TO_INCLUDE = [
-    "cli.py",
-    "ultra_client.py",
-    "organizer.py",
-    "auth.py",
-    "config.py",
+    "src/",
     "requirements.txt",
     "README.md",
     "CHANGELOG.md",
@@ -43,13 +39,20 @@ def create_package():
         ZIP_NAME.unlink()
 
     with zipfile.ZipFile(ZIP_NAME, "w", zipfile.ZIP_DEFLATED) as zipf:
-        for file_name in FILES_TO_INCLUDE:
-            p = BASE_DIR / file_name
+        for item in FILES_TO_INCLUDE:
+            p = BASE_DIR / item
             if p.exists():
-                zipf.write(p, arcname=f"Blackboard-CLI-v{VERSION}/{file_name}")
-                print(f"  + Incluido: {file_name}")
+                if p.is_dir():
+                    for f in p.rglob("*"):
+                        if "__pycache__" not in str(f) and f.is_file():
+                            arcname = f"Blackboard-CLI-v{VERSION}/{f.relative_to(BASE_DIR)}"
+                            zipf.write(f, arcname=arcname)
+                    print(f"  + Incluido directorio: {item}")
+                else:
+                    zipf.write(p, arcname=f"Blackboard-CLI-v{VERSION}/{item}")
+                    print(f"  + Incluido: {item}")
             else:
-                print(f"  - No encontrado: {file_name}")
+                print(f"  - No encontrado: {item}")
 
         for src_name, target_name in LAUNCHERS.items():
             p = BASE_DIR / src_name

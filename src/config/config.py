@@ -10,7 +10,7 @@ VERSION = "2.2.0"
 BASE_URL = "https://aulavirtual.upc.edu.pe"
 
 # Rutas de almacenamiento local
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SESSION_DIR = BASE_DIR / ".session_data"
 COOKIES_FILE = SESSION_DIR / "cookies.json"
 DOWNLOADS_CACHE_FILE = SESSION_DIR / "downloads_cache.json"
