@@ -14,7 +14,7 @@ from pathlib import Path
 from datetime import datetime
 from dateutil import parser as date_parser
 
-from config import (
+from src.config.config import (
     OUTPUT_DIR,
     DIR_INFO_GENERAL,
     DIR_EVALUACIONES,
@@ -24,7 +24,7 @@ from config import (
     KEYWORDS_INFO_GENERAL,
     SUPPORTED_EXTENSIONS,
 )
-from ultra_client import UltraClient
+from src.ultra_client.ultra_client import UltraClient
 
 
 def parse_unit_number(text: str) -> int | None:

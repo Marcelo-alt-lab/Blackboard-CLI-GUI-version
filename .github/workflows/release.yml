@@ -22,12 +22,12 @@ jobs:
           python-version: '3.11'
 
       - name: Empaquetar ZIP con package.py
-        run: python package.py
+        run: PYTHONPATH=. python src/package/package.py
 
       - name: Obtener versión del proyecto
         id: get_version
         run: |
-          VERSION=$(python -c "from config import VERSION; print(VERSION)")
+          VERSION=$(PYTHONPATH=. python -c "from src.config.config import VERSION; print(VERSION)")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "tag=v$VERSION" >> $GITHUB_OUTPUT
 

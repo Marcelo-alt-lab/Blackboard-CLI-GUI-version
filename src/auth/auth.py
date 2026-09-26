@@ -19,7 +19,7 @@ if sys.platform == "win32":
     except Exception:
         pass
 
-from config import BASE_URL, SESSION_DIR, COOKIES_FILE
+from src.config.config import BASE_URL, SESSION_DIR, COOKIES_FILE
 
 
 def get_stored_cookies() -> dict[str, str] | None:

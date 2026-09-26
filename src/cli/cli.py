@@ -61,10 +61,10 @@ from rich.progress import (
 
 console = Console(force_terminal=True, color_system="truecolor")
 
-from config import BASE_URL, OUTPUT_DIR, VERSION
-from auth import verify_session, interactive_login, logout
-from ultra_client import UltraClient
-from organizer import CourseNotebookOrganizer, format_date, generate_gemini_notebook
+from src.config.config import BASE_URL, OUTPUT_DIR, VERSION
+from src.auth.auth import verify_session, interactive_login, logout
+from src.ultra_client.ultra_client import UltraClient
+from src.organizer.organizer import CourseNotebookOrganizer, format_date, generate_gemini_notebook
 
 TEXT_FULL = r"""[bold bright_cyan]
  ██████╗ ██╗      █████╗  ██████╗██╗  ██╗██████╗  ██████╗  █████╗ ██████╗ ██████╗

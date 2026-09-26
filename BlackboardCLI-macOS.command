@@ -65,7 +65,8 @@ fi
 
 # 2. Si el entorno virtual ya existe y está configurado, ejecutar directamente
 if [ -f "$VENV_PY" ]; then
-    exec "$VENV_PY" "$DIR/cli.py" "$@"
+    export PYTHONPATH="$DIR"
+    exec "$VENV_PY" "$DIR/src/cli/cli.py" "$@"
 fi
 
 # 3. Crear entorno virtual (.venv) por primera vez
@@ -76,7 +77,8 @@ echo ""
 if ! "$PY_CMD" -m venv "$VENV_DIR"; then
     echo "[!] No se pudo crear el entorno virtual automáticamente con $PY_CMD."
     echo "[!] Intentando ejecutar directamente con el Python del sistema..."
-    exec "$PY_CMD" "$DIR/cli.py" "$@"
+    export PYTHONPATH="$DIR"
+    exec "$PY_CMD" "$DIR/src/cli/cli.py" "$@"
 fi
 
 # 4. Instalar librerías requeridas en .venv
@@ -100,4 +102,5 @@ echo "[✓] Entorno virtual listo. Iniciando Blackboard CLI..."
 echo ""
 
 # 6. Iniciar la aplicación
-exec "$VENV_PY" "$DIR/cli.py" "$@"
+export PYTHONPATH="$DIR"
+    exec "$VENV_PY" "$DIR/src/cli/cli.py" "$@"

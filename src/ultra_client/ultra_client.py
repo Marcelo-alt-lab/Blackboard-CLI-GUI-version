@@ -15,8 +15,8 @@ from typing import Any
 import httpx
 from bs4 import BeautifulSoup
 
-from config import BASE_URL, DOWNLOADS_CACHE_FILE, SUPPORTED_EXTENSIONS
-from auth import get_stored_cookies
+from src.config.config import BASE_URL, DOWNLOADS_CACHE_FILE, SUPPORTED_EXTENSIONS
+from src.auth.auth import get_stored_cookies
 
 
 def get_filename_from_cd(cd_header: str) -> str | None:

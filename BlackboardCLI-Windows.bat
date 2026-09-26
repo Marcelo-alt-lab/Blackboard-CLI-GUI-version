@@ -99,7 +99,8 @@ echo.
 if errorlevel 1 (
     echo [!] No se pudo crear el entorno virtual automaticamente.
     echo [!] Ejecutando con el Python del sistema...
-    %PY_CMD% cli.py %*
+    set PYTHONPATH=%CD%
+    %PY_CMD% src\cli\cli.py %*
     goto :finish
 )
 
@@ -120,7 +121,8 @@ echo [v] Entorno virtual listo. Iniciando Blackboard CLI...
 echo.
 
 :execute_venv
-".venv\Scripts\python.exe" cli.py %*
+set PYTHONPATH=%CD%
+".venv\Scripts\python.exe" src\cli\cli.py %*
 
 :finish
 if errorlevel 1 (
